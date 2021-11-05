@@ -2,10 +2,13 @@ package com.example.bottomnavigationfragment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //Botões
     lateinit var btnHome: Button
@@ -16,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeFragment: HomeFragment
     lateinit var clienteFragment: ClienteFragment
     lateinit var buscaFragment: BuscaFragment
+
+    lateinit var bottomNavigation : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         clienteFragment = ClienteFragment()
         homeFragment = HomeFragment()
 
+        bottomNavigation = findViewById(R.id.bottom_navigation)
+
         btnHome.setOnClickListener {
             setFragment(homeFragment)
         }
@@ -40,11 +47,32 @@ class MainActivity : AppCompatActivity() {
         btnBusca.setOnClickListener {
             setFragment(buscaFragment)
         }
+
+        bottomNavigation.setOnItemSelectedListener(this)
+
     }
 
     private fun setFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame, fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId) {
+            R.id.menu_home -> {
+                setFragment(homeFragment)
+            }
+
+            R.id.menu_cliente -> {
+                setFragment(clienteFragment)
+            } else -> {
+                setFragment(buscaFragment)
+            }
+        }
+
+        return true
+
     }
 }
