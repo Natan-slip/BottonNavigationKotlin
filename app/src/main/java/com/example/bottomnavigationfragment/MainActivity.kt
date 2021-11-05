@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     //Botões
     lateinit var btnHome: Button
@@ -48,7 +48,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setFragment(buscaFragment)
         }
 
-        bottomNavigation.setOnItemSelectedListener(this)
+        bottomNavigation.setOnItemSelectedListener { item ->
+            onNavigationItemSelected(item)
+            true }
 
     }
 
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragmentTransaction.commit()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+   fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId) {
             R.id.menu_home -> {
