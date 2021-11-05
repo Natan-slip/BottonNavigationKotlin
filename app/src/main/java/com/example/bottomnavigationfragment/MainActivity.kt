@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -20,7 +21,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var clienteFragment: ClienteFragment
     lateinit var buscaFragment: BuscaFragment
 
+    // Toolbar
+    lateinit var toolbar : Toolbar
+
     lateinit var bottomNavigation : BottomNavigationView
+    lateinit var navigation : NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,12 @@ class MainActivity : AppCompatActivity() {
         homeFragment = HomeFragment()
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
+
+        navigation = findViewById((R.id.navigation))
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        toolbar.setTitle("Teste Drawer")
 
         btnHome.setOnClickListener {
             setFragment(homeFragment)
@@ -52,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             onNavigationItemSelected(item)
             true }
 
+        navigation.setNavigationItemSelectedListener { item ->
+            onNavigationItemSelected(item)
+            true }
     }
 
     private fun setFragment(fragment: Fragment) {
